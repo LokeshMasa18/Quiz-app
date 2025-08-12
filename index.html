@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Quizify</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header>
+        <h1>Quizify</h1>
+        <div class="controls">
+          <div id="who" class="small">Not signed in</div>
+          <button id="openLoginBtn" class="ghost">Login / Register</button>
+        </div>
+      </header>
+
+      <div class="grid">
+        <main class="card" id="mainArea"></main>
+
+        <aside class="card">
+          <h3 style="margin: 0 0 10px 0">Quick actions</h3>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <button id="createQuizBtn" class="btn">Create Quiz</button>
+            <button id="myDashboardBtn" class="ghost">My Dashboard</button>
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    <div id="toast" class="toast" aria-hidden="true"></div>
+
+    <template id="loginTpl">
+      <div>
+        <h2>Register / Login</h2>
+        <div
+          style="
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-top: 10px;
+          "
+        >
+          <div>
+            <label>Username</label>
+            <input id="reg_username" type="text" placeholder="e.g. alice" />
+          </div>
+          <div>
+            <label>Email</label>
+            <input id="reg_email" type="email" placeholder="you@domain.com" />
+          </div>
+        </div>
+        <div style="margin-top: 8px">
+          <label>Password</label><input id="reg_password" type="password" />
+        </div>
+        <div style="display: flex; gap: 8px; margin-top: 12px">
+          <button id="doRegister" class="btn">Register</button
+          ><button id="doLogin" class="ghost">Login</button>
+        </div>
+        <div
+          id="authMessage"
+          class="small"
+          style="margin-top: 8px; color: var(--muted)"
+        ></div>
+      </div>
+    </template>
+
+    <template id="createQuizTpl">
+      <div>
+        <h2>Create Quiz</h2>
+        <div
+          style="display: flex; gap: 8px; align-items: center; margin-top: 8px"
+        >
+          <div style="flex: 1">
+            <label>Quiz Title</label>
+            <input id="quizTitle" type="text" placeholder="e.g. JS Basics" />
+          </div>
+        </div>
+
+        <div style="margin-top: 12px">
+          <h4 class="small">Add Question</h4>
+          <div style="margin-bottom: 8px">
+            <label>Question Type</label>
+            <select id="questionType">
+              <option value="single">Single Choice</option>
+              <option value="multiple">Multiple Choice</option>
+            </select>
+          </div>
+          <label>Question text</label>
+          <input id="q_text" type="text" placeholder="What is 2+2?" />
+          <div class="row" style="margin-top: 8px">
+            <input id="a1" type="text" placeholder="Answer 1" />
+            <input id="a2" type="text" placeholder="Answer 2" />
+          </div>
+          <div class="row" style="margin-top: 8px">
+            <input id="a3" type="text" placeholder="Answer 3" />
+            <input id="a4" type="text" placeholder="Answer 4" />
+          </div>
+          <div style="margin-top: 8px" class="row">
+            <div style="flex: 1">
+              <label id="q_type_text">Correct answer (enter 1-4)</label>
+              <input id="correctIndex" type="text" placeholder="1" />
+            </div>
+            <div style="width: 140px; display: flex; align-items: end">
+              <button id="addQuestion" class="btn">Add Question</button>
+            </div>
+          </div>
+
+          <div class="questions-list" id="questionsList"></div>
+
+          <div style="margin-top: 12px; display: flex; gap: 8px">
+            <button id="saveQuiz" class="btn">Save & Generate Link</button>
+            <button id="cancelCreate" class="ghost">Cancel</button>
+          </div>
+          <div id="generatedLink" style="margin-top: 12px" class="small"></div>
+        </div>
+      </div>
+    </template>
+
+    <template id="quizTakeTpl">
+      <div>
+        <h2 id="takingTitle">Take Quiz</h2>
+        <div id="quizMeta" class="small" style="margin-bottom: 10px"></div>
+        <div id="quizQuestionWrap"></div>
+        <div
+          style="margin-top: 10px; display: flex; gap: 8px; align-items: center"
+        >
+          <button id="prevQ" class="ghost">Prev</button
+          ><button id="nextQ" class="btn">Next</button>
+          <div id="submitWrap" style="margin-left: auto"></div>
+        </div>
+        <div id="resultArea" class="hidden" style="margin-top: 14px"></div>
+      </div>
+    </template>
+
+    <template id="dashboardTpl">
+      <div>
+        <h2>My Dashboard</h2>
+        <div class="small" style="margin-bottom: 8px">Quizzes you created</div>
+        <div id="myQuizzes"></div>
+        <hr
+          style="
+            margin: 12px 0;
+            border: none;
+            border-top: 1px solid rgba(255, 255, 255, 0.03);
+          "
+        />
+        <div class="small">All results for your quizzes</div>
+        <div id="allResults"></div>
+      </div>
+    </template>
+
+    <script type="module" src="main.js"></script>
+  </body>
+</html>
